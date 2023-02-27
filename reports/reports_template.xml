@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_patient_id_details">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-foreach="docs" t-as="patient">
+                            <!--===============================================================================-->
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Created By:</strong>
+                                <p class="m-0" t-field="patient.create_uid"/>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-4">
+                                <strong>Created Date and Time:</strong>
+                                <p class="m-0" t-field="patient.create_date"/>
+                            </div>
+                            <!--====================================================================================================-->
+                            <div class="col-md-6">
+                                <table class="table table-sm o_main_table mt-8 mb-6">
+                                    <t t-if="patient.id">
+                                        <span>Patient Details</span>
+                                        <thead style="display: table-row-group">
+                                            <tr>
+                                                <th name="th refrance" class="text-start">
+                                                    <span>Name</span>
+                                                </th>
+                                                <th name="th age" class="text-end">
+                                                    <span>Age</span>
+                                                </th>
+                                                <th name="th gender" class="text-end">
+                                                    <span>Gender</span>
+                                                </th>
+                                                <th name="th doctor" class="text-end">
+                                                    <span>Doctor</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </t>
+
+
+                                    <td align="start" valign="start">
+                                        <span t-field="patient.name"/>
+                                    </td>
+                                    <td align="end" valign="end">
+                                        <span t-field="patient.age"/>
+                                    </td>
+                                    <td align="end" valign="end">
+                                        <span t-field="patient.gender"/>
+                                    </td>
+                                    <td align="end" valign="end">
+                                        <span t-field="patient.doctor"/>
+                                    </td>
+
+                                </table>
+                            </div>
+                            <!--====================================================================================================-->
+                            <template id="report_patient_medicine_details mt=6">
+                                <t t-foreach="docs" t-as="o">
+                                    <div t-if="o.prescription_line_ids">
+                                        <div class="col-md-6">
+                                            <table class="table table-sm o_main_table mt-6">
+                                                <span>Medicine Details</span>
+                                                <thead style="display: table-row-group">
+                                                    <tr>
+                                                        <th name="th refrance" class="text-start">
+                                                            <span>Medicine</span>
+                                                        </th>
+                                                        <th name="th qty" class="text-end">
+                                                            <span>Quantity</span>
+                                                        </th>
+                                                        <th name="th unit price" class="text-end">
+                                                            <span>Unit Price</span>
+                                                        </th>
+                                                        <th name="th sub_total" class="text-end">
+                                                            <span>Sub total</span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tr t-foreach="o.prescription_line_ids" t-as="line">
+                                                    <td align="start" valign="start">
+                                                        <span t-field="line.name"/>
+                                                    </td>
+                                                    <td align="end" valign="end">
+                                                        <span t-field="line.qty"/>
+                                                    </td>
+                                                    <td align="end" valign="end">
+                                                        <span t-field="line.price_unit"/>
+                                                    </td>
+                                                    <td align="end" valign="end">
+                                                        <span t-field="line.price_subtotal"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </t>
+                            </template>
+                            <!--                            =================================================================================================================-->
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

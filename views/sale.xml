@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_create_appointments_popup" model="ir.actions.server">
+        <field name="name">Create Excel File</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_view_types">form,tree</field>
+        <field name="state">code</field>
+        <field name="code">
+            if record:
+            action_values = env.ref('esteem_hospital.view_create_excel_action').sudo().read()[0]
+            action_values.update({'context': env.context})
+            action = action_values
+        </field>
+    </record>
+
+    <record id="sale_order_view_form_inherited" model="ir.ui.view">
+        <field name="name">sale_Description.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="sale_description">
+                </field>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="sale_order_view_tree_inherited" model="ir.ui.view">
+        <field name="name">sale_order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="sale_description">
+                </field>
+            </field>
+        </field>
+    </record>
+
+
+    <!--    Employee table inherited -->
+
+    <record id="department_table_form_inherited" model="ir.ui.view">
+        <field name="name">no_of_employee.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="no_of_employee">
+                </field>
+            </field>
+        </field>
+    </record>
+
+    <record id="department_table_tree_inherited" model="ir.ui.view">
+        <field name="name">no_of_employee.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_tree"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="no_of_employee">
+                </field>
+            </field>
+        </field>
+    </record>
+
+</odoo>

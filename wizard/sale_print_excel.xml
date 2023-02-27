@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_create_excel_wizard" model="ir.ui.view">
+            <field name="name">Create Appointment Wizard</field>
+            <field name="model">create.excel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="fields_id" widget="many2many_tags" />
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+
+                    </sheet>
+                    <footer>
+                        <button name="create_create_excel_action" type="object" string="Create Excel" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_create_excel_action" model="ir.actions.act_window">
+            <field name="name">Create Excel File</field>
+            <field name="res_model">create.excel</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_create_excel_wizard"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="diseases_tree" model="ir.ui.view">
+        <field name="name">hospital.diseases.tree</field>
+        <field name="model">hospital.diseases</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="diseases_id"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_diseases_form" model="ir.ui.view">
+        <field name="name">hospital.diseases.form</field>
+        <field name="model">hospital.diseases</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="diseases_id"/>
+                            <field name="color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model='ir.actions.act_window' id="diseases_action">
+        <field name="name">Diseases</field>
+        <field name="res_model">hospital.diseases</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Enter diseases Detail !
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="hospital_diseases_root"
+            name="Diseases"
+            parent="hospital_root"
+            action="diseases_action"
+            sequence="30"/>
+
+
+</odoo>

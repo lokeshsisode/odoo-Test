@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    Add create menu to action in patient module-->
+    <record id="action_create_appointments_popup" model="ir.actions.server">
+        <field name="name">Create Appointment</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_hospital_patient"/>
+        <field name="binding_model_id" ref="model_hospital_patient"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            if record:
+            action_values = env.ref('esteem_hospital.view_create_appointment_action').sudo().read()[0]
+            action_values.update({'context': env.context})
+            action = action_values
+        </field>
+    </record>
+
+    <record id="view_patient_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.kanban</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="age"/>
+                <field name="note"/>
+                <field name="patient_refrance_id"/>
+                <field name="doctor"/>
+                <field name="exist_diseases_id"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <field name="name"/>
+                                </ul>
+                                <ul>
+                                    <field name="gender"/>
+                                </ul>
+                                <field name="age"/>
+                                <ul>
+                                    <field name="note"/>
+                                </ul>
+                                <ul>
+                                    <field name="patient_refrance_id"/>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="patient_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.tree</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button name="help_redirect_url" string="odoo16 Doc." type="object"
+                            class="btn-primary"
+                    />
+                </header>
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="patient_refrance_id"/>
+                <field name="age"/>
+                <field name="note"/>
+                <field name="state"/>
+                <field name="doctor"/>
+                <field name="exist_diseases_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_patient_search" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="name"/>
+                <field name="note"/>
+                <separator>
+                    <group expand="1" string="Group By">
+                        <filter string="gender" name="gender" context="{'group_by':'gender'}"/>
+                        <filter string="age" name="age" context="{'group_by':'age'}"/>
+                    </group>
+                </separator>
+            </search>
+        </field>
+    </record>
+    <record id="view_patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name='state' widget="statusbar"
+                           statusbar_visible="draft,confirmed,done"/>
+                    <button id='button_confirm' name="action_confirm" string="Confirm" type="object"
+                            class="btn-primary" states='draft'
+                    />
+                    <button id='create_appointment' name="%(view_create_appointment_action)d"
+                            string="Create appointment"
+                            type="action"
+                            class="btn-primary"
+                    />
+                    <button id='button_done' name="action_done" string="Done" type="object"
+                            class="btn-primary" states='confirmed'
+                    />
+                    <button id='button_draft' name="action_draft" string="Reset to Draft" type="object"
+                            class="btn-primary" states='cancel'
+                    />
+                    <button id='button_cancel' name="action_cancel" string="Cancel" type="object"
+                            states='draft,confirmed,done'
+                    />
+                </header>
+                <sheet>
+                    <widget name='web_ribbon' title="Archived" bg_color="bg-danger"
+                            attrs="{'invisible' : [('active','=',True)]}"/>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="age"/>
+                            <field name="patient_refrance_id"/>
+                            <field name="exist_diseases_id" widget="many2many_tags"
+                                   options="{'color_field': 'color', 'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="note"/>
+                            <field name="doctor"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Medicine" name="medicine">
+                            <field name="prescription_line_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal" sum="price_unit" string="Total" decoration-bf="1"  widget="monetary"/>
+                                    <field name="currency_id" invissible="1"/>
+
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="qty"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal" sum="price_unit" string="Total" decoration-bf="1"  widget="monetary"/>
+                                        <field name="currency_id" invissible="1"/>
+
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record model='ir.actions.act_window' id="patient_action">
+        <field name="name">Patient</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('age', '&gt;' , 19)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first patient !
+            </p>
+        </field>
+    </record>
+    <menuitem
+            id="hospital_root"
+            name="Hospital"
+            sequence="10"/>
+
+    <menuitem
+            id="hospital_patient_root"
+            name="Patients"
+            parent="hospital_root"
+            sequence="10"/>
+
+
+    <menuitem
+            id="hospital_patient"
+            name="Adult"
+            parent="hospital_patient_root"
+            action="patient_action"
+            sequence="10"/>
+
+</odoo>

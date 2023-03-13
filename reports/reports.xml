@@ -1,48 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="print_patient_details" model="ir.actions.report">
-            <field name="name">Patient Details</field>
-            <field name="model">hospital.patient</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">esteem_hospital.report_patient_id_details</field>
-            <field name="report_file">esteem_hospital.report_patient_id_details</field>
-            <field name="binding_model_id" ref="model_hospital_patient"/>
-            <field name="binding_type">report</field>
-        </record>
+        <field name="name">Patient Details</field>
+        <field name="model">hospital.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esteem_hospital.report_patient_id_details</field>
+        <field name="report_file">esteem_hospital.report_patient_id_details</field>
+        <field name="binding_model_id" ref="model_hospital_patient"/>
+        <field name="binding_type">report</field>
+    </record>
 
 
     <record id="print_medicine_details" model="ir.actions.report">
-            <field name="name">Medicine Details</field>
-            <field name="model">appointment.prescription.lines</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">esteem_hospital.report_patient_medicine_details</field>
-            <field name="report_file">esteem_hospital.report_patient_medicine_details</field>
-            <field name="binding_model_id" ref="model_appointment_prescription_lines"/>
-            <field name="binding_type">report</field>
-        </record>
+        <field name="name">Medicine Details</field>
+        <field name="model">appointment.prescription.lines</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esteem_hospital.report_patient_medicine_details</field>
+        <field name="report_file">esteem_hospital.report_patient_medicine_details</field>
+        <field name="binding_model_id" ref="model_appointment_prescription_lines"/>
+        <field name="binding_type">report</field>
+    </record>
 
-<!--    for excel file -->
+    <!--    for excel file -->
 
     <record id="print_excel_report" model="ir.actions.report">
-            <field name="name">Print Excel Report</field>
-            <field name="model">create.excel</field>
-            <field name="report_type">xlsx</field>
-            <field name="report_name">esteem_hospital.print_excel_report</field>
-            <field name="report_file">esteem_hospital.print_excel_report</field>
+        <field name="name">Print Excel Report</field>
+        <field name="model">create.excel</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esteem_hospital.print_excel_report</field>
+        <field name="report_file">esteem_hospital.print_excel_report</field>
 
-        </record>
-
-
-    <record id="print_excel_report_line" model="ir.actions.report">
-            <field name="name">Print Excel Report Line</field>
-            <field name="model">sale.order.line</field>
-            <field name="report_type">xlsx</field>
-            <field name="report_name">esteem_hospital.print_excel_report_line</field>
-            <field name="report_file">esteem_hospital.print_excel_report_line</field>
-
-        </record>
-
-
+    </record>
 
 
 </odoo>

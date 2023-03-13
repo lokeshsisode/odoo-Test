@@ -27,7 +27,11 @@ class HospitalDoctor(models.Model):
             default['doctor_id'] = _("%s (copy)") % (self.doctor_id)
         return super(HospitalDoctor, self).copy(default=default)
 
-
+    # @api.constrains('doctor_id')
+    # def _verify_name(self):
+    #     for rec in self:
+    #         if rec.doctor_id == self.doctor_id:
+    #             raise ValidationError(_("%s is already exist" % self.doctor_id))
 
 
 

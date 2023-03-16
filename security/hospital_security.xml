@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+<!--          This is security.xml file-->
 
 
         <record model="ir.module.category" id="module_category_hospital">
